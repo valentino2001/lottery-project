@@ -1,2 +1,3 @@
 # lottery
-USDT Lottery game on Binance Chain | Can be customized for any token or network
+This lottery is designed universal for crypto projects to make some nice giveaways for their community.
+Everything is dynamic, so can be easily customized by other developers
