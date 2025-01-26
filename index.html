@@ -122,19 +122,19 @@
                 <h3>10 Participants</h3>
                 <p>Price per Ticket: 10 €</p>
                 <p>Jackpot: 100 €</p>
-                <button onclick="buyTicket(10, 10, 100)">Buy Ticket</button>
+                <button onclick="buyTicket(0, '10')">Buy Ticket</button>
             </div>
             <div class="option">
                 <h3>20 Participants</h3>
                 <p>Price per Ticket: 25 €</p>
                 <p>Jackpot: 500 €</p>
-                <button onclick="buyTicket(20, 25, 500)">Buy Ticket</button>
+                <button onclick="buyTicket(1, '25')">Buy Ticket</button>
             </div>
             <div class="option">
                 <h3>50 Participants</h3>
                 <p>Price per Ticket: 100 €</p>
                 <p>Jackpot: 5000 €</p>
-                <button onclick="buyTicket(50, 100, 5000)">Buy Ticket</button>
+                <button onclick="buyTicket(2, '100')">Buy Ticket</button>
             </div>
         </section>
 
@@ -157,39 +157,70 @@
 
     <script src="static/script.js"></script>
     <script>
-        async function buyTicket(maxParticipants, price, jackpot) {
-            const currentParticipants = Math.floor(Math.random() * maxParticipants);
-            if (currentParticipants < maxParticipants) {
-                alert(`You bought a ticket for ${price} €. Current participants: ${currentParticipants + 1}/${maxParticipants}. Jackpot: ${jackpot} €.`);
+        const provider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
+        const contractAddress = "0x22F75DFc8c03a2F8823E8c48ABFFDDb6A06bCfE0";
+        const contractABI = [
+            // Paste Contract ABI Here
+        ];
+
+        let contract;
+        let signer;
+
+        async function initialize() {
+            if (window.ethereum) {
+                const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                signer = web3Provider.getSigner();
+                contract = new ethers.Contract(contractAddress, contractABI, signer);
+                loadJackpot();
+                loadWinners();
             } else {
-                alert("Sorry, all tickets for this lottery are sold out!");
+                alert("Please install MetaMask!");
+            }
+        }
+
+        async function buyTicket(lotteryType, ticketPrice) {
+            try {
+                const tx = await contract[`joinLottery${lotteryType}`](ethers.utils.parseEther(ticketPrice));
+                await tx.wait();
+                alert("Ticket purchased successfully!");
+                loadJackpot();
+            } catch (error) {
+                console.error(error);
+                alert("Error purchasing ticket.");
             }
         }
 
         async function loadJackpot() {
-            document.getElementById('jackpot').innerText = '500 €';
-        }
-
-        async function loadWinners() {
-            const winners = [];
-            const winnerList = document.getElementById('winner-list');
-            winnerList.innerHTML = '';
-
-            if (winners.length === 0) {
-                const noWinnersMessage = document.createElement('li');
-                noWinnersMessage.textContent = "No winners yet.";
-                winnerList.appendChild(noWinnersMessage);
-            } else {
-                winners.forEach(winner => {
-                    const li = document.createElement('li');
-                    li.textContent = winner;
-                    winnerList.appendChild(li);
-                });
+            try {
+                const balance = await contract.lotteryBalance();
+                document.getElementById("jackpot").innerText = ethers.utils.formatEther(balance) + " BNB";
+            } catch (error) {
+                console.error("Failed to fetch jackpot.", error);
             }
         }
 
-        loadJackpot();
-        loadWinners();
+        async function loadWinners() {
+            try {
+                const winners = await contract.allWinner();
+                const winnerList = document.getElementById("winner-list");
+                winnerList.innerHTML = "";
+                
+                if (winners.length === 0) {
+                    winnerList.innerHTML = "<li>No winners yet.</li>";
+                } else {
+                    winners.forEach(winner => {
+                        const li = document.createElement("li");
+                        li.textContent = winner;
+                        winnerList.appendChild(li);
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load winners.", error);
+            }
+        }
+
+        initialize();
     </script>
 </body>
 </html>
