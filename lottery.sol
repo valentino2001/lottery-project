@@ -1,7 +1,36 @@
 /**
- *Submitted for verification at BscScan.com on 2023-05-08
+ *Submitted for verification at BscScan.com on 2025-01-26
 */
 
+/*                                                                     
+                           
+
+$$\                              $$\                               
+$$ |                             \__|                              
+$$ |     $$\   $$\ $$$$$$\$$$$\  $$\ $$$$$$$\   $$$$$$\  $$\   $$\ 
+$$ |     $$ |  $$ |$$  _$$  _$$\ $$ |$$  __$$\ $$  __$$\ \$$\ $$  |
+$$ |     $$ |  $$ |$$ / $$ / $$ |$$ |$$ |  $$ |$$$$$$$$ | \$$$$  / 
+$$ |     $$ |  $$ |$$ | $$ | $$ |$$ |$$ |  $$ |$$   ____| $$  $$<  
+$$$$$$$$\\$$$$$$  |$$ | $$ | $$ |$$ |$$ |  $$ |\$$$$$$$\ $$  /\$$\ 
+\________|\______/ \__| \__| \__|\__|\__|  \__| \_______|\__/  \__|
+                                                                   
+                                                                                                                                 
+Website: www.luminex.dev
+Telegram: @luminex_official
+X|Twitter: @Luminex_0xV2
+YouTube: @Luminex_Crypto
+TikTok: @luminex_crypto
+Instagram: @luminex_crypto
+
+
+Features:
+BUY FEE 9%                               |    SELL FEE 15%
+3% BNB REFLECTIONS (PAID EVERY HOUR)     |    5% BNB REFLECTIONS (PAID EVERY HOUR)
+3% MARKETING/DEVELOPMENT                 |    5% MARKETING/DEVELOPMENT
+3% AUTOBOOST (BUYBACK FUNCTION)          |    5% AUTOBOOST (BUYBACK FUNCTION)
+
+
+*/
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.0;
 
@@ -263,8 +292,8 @@ contract lottery is ReentrancyGuard{
     address payable[] participants;
     address private owner;
     
-    address private dev2 = 0x0A773fc7bf44d0dAFF430DBF6011d3Be39260e8F; //dev2 addres
-    address private dev = 0x0A773fc7bf44d0dAFF430DBF6011d3Be39260e8F;
+    address private dev2 = 0x893Cb66cee3c5ee5c04f99d9Ee38f2bC3e2757d7; //dev2 address
+    address private dev = 0x130cbCAbEafd8DCA00c29B918CA3E263ebAeb020;
     
 uint256 private maxParticipantNumbers1;
     uint256 private participantNumbers1;
@@ -287,13 +316,13 @@ uint256 private maxParticipantNumbers1;
     constructor()  {  
         owner =  msg.sender;
         maxParticipantNumbers = 10;
-        ticketPrice = 5 ether ;
+        ticketPrice = 10 ether ;
 
-         maxParticipantNumbers1 = 5;
-        ticketPrice1 = 10 ether;
+         maxParticipantNumbers1 = 20;
+        ticketPrice1 = 25 ether;
 
-         maxParticipantNumbers2 = 2;
-        ticketPrice2 = 50 ether;
+         maxParticipantNumbers2 = 50;
+        ticketPrice2 = 100 ether;
 
         tokenAdress = 0x55d398326f99059fF775485246999027B3197955; 
         UsdtInterface = IERC20(tokenAdress);
@@ -494,8 +523,8 @@ for (uint i=0; i<arrayLength2; i++) {
         uint256 totalUsers = participants.length ;
         uint256 contractBalance = ticketPrice * totalUsers;
        
-        uint256 Dev2Fee = SafeMath.div(SafeMath.mul(contractBalance,26),100);
-        uint256 devFee = SafeMath.div(SafeMath.mul(contractBalance,4),100);
+        uint256 Dev2Fee = SafeMath.div(SafeMath.mul(contractBalance,20),100);
+        uint256 devFee = SafeMath.div(SafeMath.mul(contractBalance,10),100);
       
         UsdtInterface.transfer(dev2,Dev2Fee);
         uint256 winnerAmount = SafeMath.sub(contractBalance,Dev2Fee);
@@ -512,8 +541,8 @@ for (uint i=0; i<arrayLength2; i++) {
         uint win = random() % participants1.length;
         uint256 contractBalance = ticketPrice1 * participants1.length;
        
-        uint256 Dev2Fee = SafeMath.div(SafeMath.mul(contractBalance,26),100);
-         uint256 devFee = SafeMath.div(SafeMath.mul(contractBalance,4),100);
+        uint256 Dev2Fee = SafeMath.div(SafeMath.mul(contractBalance,20),100);
+         uint256 devFee = SafeMath.div(SafeMath.mul(contractBalance,10),100);
       
        UsdtInterface.transfer(dev2,Dev2Fee);
         uint256 winnerAmount = SafeMath.sub(contractBalance,Dev2Fee);
@@ -530,9 +559,9 @@ for (uint i=0; i<arrayLength2; i++) {
         uint win = random() % participants2.length;
         uint256 contractBalance = ticketPrice2 * participants2.length;
        
-        uint256 Dev2Fee = SafeMath.div(SafeMath.mul(contractBalance,26),100);
+        uint256 Dev2Fee = SafeMath.div(SafeMath.mul(contractBalance,20),100);
      
-         uint256 devFee = SafeMath.div(SafeMath.mul(contractBalance,4),100);
+         uint256 devFee = SafeMath.div(SafeMath.mul(contractBalance,10),100);
      
       UsdtInterface.transfer(dev2,Dev2Fee);
         uint256 winnerAmount = SafeMath.sub(contractBalance,Dev2Fee);
