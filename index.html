@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USDT Lotterie</title>
+    <title>USDT Lottery</title>
     <link rel="stylesheet" href="static/style.css">
     <style>
         body {
             background: url('static/galaxy-bg.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: white;
+            color: #00FFFF;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -46,6 +46,7 @@
             text-align: center;
             box-shadow: 0 0 20px #00FFFF;
             transition: transform 0.3s, box-shadow 0.3s;
+            width: 200px;
         }
 
         .option:hover {
@@ -111,62 +112,80 @@
 </head>
 <body>
     <header>
-        <img src="logo.png" alt="Lotterie-Logo" class="logo">
-        <h1>USDT Lotterie</h1>
+        <img src="logo.png" alt="Lottery Logo" class="logo">
+        <h1>USDT Lottery</h1>
     </header>
     
     <main>
         <section class="ticket-options">
-            <div id="ticket-options-container">
-                <!-- Dynamische Ticket-Optionen werden hier geladen -->
+            <div class="option">
+                <h3>10 Participants</h3>
+                <p>Price per Ticket: 10 €</p>
+                <p>Jackpot: 100 €</p>
+                <button onclick="buyTicket(10, 10, 100)">Buy Ticket</button>
+            </div>
+            <div class="option">
+                <h3>20 Participants</h3>
+                <p>Price per Ticket: 25 €</p>
+                <p>Jackpot: 500 €</p>
+                <button onclick="buyTicket(20, 25, 500)">Buy Ticket</button>
+            </div>
+            <div class="option">
+                <h3>50 Participants</h3>
+                <p>Price per Ticket: 100 €</p>
+                <p>Jackpot: 5000 €</p>
+                <button onclick="buyTicket(50, 100, 5000)">Buy Ticket</button>
             </div>
         </section>
 
         <section class="current-pot">
-            <h2>Aktueller Jackpot</h2>
-            <p id="jackpot">Wird geladen...</p>
+            <h2>Current Jackpot</h2>
+            <p id="jackpot">Loading...</p>
         </section>
 
         <section class="winners">
-            <h2>Letzte Gewinner</h2>
+            <h2>Last Winners</h2>
             <ul id="winner-list">
-                <li>Wird geladen...</li>
+                <li>Loading...</li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p>© 2025 USDT Lotterie. Alle Rechte vorbehalten.</p>
+        <p>© 2025 USDT Lottery. All rights reserved.</p>
     </footer>
 
+    <script src="static/script.js"></script>
     <script>
-        const ticketOptions = [
-            { tickets: 10, price: 10, jackpot: 100 },
-            { tickets: 20, price: 25, jackpot: 500 },
-            { tickets: 50, price: 100, jackpot: 5000 },
-        ];
+        async function buyTicket(maxParticipants, price, jackpot) {
+            // Example: Simulate ticket purchase logic.
+            const currentParticipants = Math.floor(Math.random() * maxParticipants);
+            if (currentParticipants < maxParticipants) {
+                alert(`You bought a ticket for ${price} €. Current participants: ${currentParticipants + 1}/${maxParticipants}. Jackpot: ${jackpot} €.`);
+            } else {
+                alert("Sorry, all tickets for this lottery are sold out!");
+            }
+        }
 
-        function loadTicketOptions() {
-            const container = document.getElementById('ticket-options-container');
-            container.innerHTML = '';
-            ticketOptions.forEach(option => {
-                const div = document.createElement('div');
-                div.className = 'option';
-                div.innerHTML = `
-                    <h3>${option.tickets} Tickets</h3>
-                    <p>Preis: ${option.price} €</p>
-                    <p>Jackpot: ${option.jackpot} €</p>
-                    <button onclick="buyTickets(${option.tickets}, ${option.price})">Jetzt kaufen</button>
-                `;
-                container.appendChild(div);
+        async function loadJackpot() {
+            document.getElementById('jackpot').innerText = '500 €';
+        }
+
+        async function loadWinners() {
+            const winners = ['Alice', 'Bob', 'Charlie', 'Diana', 'Eve'];
+            const recentWinners = winners.slice(-5);
+
+            const winnerList = document.getElementById('winner-list');
+            winnerList.innerHTML = '';
+            recentWinners.forEach(winner => {
+                const li = document.createElement('li');
+                li.textContent = winner;
+                winnerList.appendChild(li);
             });
         }
 
-        async function buyTickets(tickets, price) {
-            alert(`${tickets} Tickets für ${price} € gekauft.`);
-        }
-
-        loadTicketOptions();
+        loadJackpot();
+        loadWinners();
     </script>
 </body>
 </html>
