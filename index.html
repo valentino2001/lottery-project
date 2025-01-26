@@ -146,7 +146,7 @@
         <section class="winners">
             <h2>Last Winners</h2>
             <ul id="winner-list">
-                <li>Loading...</li>
+                <!-- Dynamic winner list will be loaded here -->
             </ul>
         </section>
     </main>
@@ -158,7 +158,6 @@
     <script src="static/script.js"></script>
     <script>
         async function buyTicket(maxParticipants, price, jackpot) {
-            // Example: Simulate ticket purchase logic.
             const currentParticipants = Math.floor(Math.random() * maxParticipants);
             if (currentParticipants < maxParticipants) {
                 alert(`You bought a ticket for ${price} €. Current participants: ${currentParticipants + 1}/${maxParticipants}. Jackpot: ${jackpot} €.`);
@@ -172,16 +171,21 @@
         }
 
         async function loadWinners() {
-            const winners = ['Alice', 'Bob', 'Charlie', 'Diana', 'Eve'];
-            const recentWinners = winners.slice(-5);
-
+            const winners = [];
             const winnerList = document.getElementById('winner-list');
             winnerList.innerHTML = '';
-            recentWinners.forEach(winner => {
-                const li = document.createElement('li');
-                li.textContent = winner;
-                winnerList.appendChild(li);
-            });
+
+            if (winners.length === 0) {
+                const noWinnersMessage = document.createElement('li');
+                noWinnersMessage.textContent = "No winners yet.";
+                winnerList.appendChild(noWinnersMessage);
+            } else {
+                winners.forEach(winner => {
+                    const li = document.createElement('li');
+                    li.textContent = winner;
+                    winnerList.appendChild(li);
+                });
+            }
         }
 
         loadJackpot();
