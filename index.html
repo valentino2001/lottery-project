@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="static/style.css">
     <style>
         body {
-            background: url('static/galaxy-bg.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background-color: black; /* Hintergrundfarbe auf Schwarz geändert */
             color: #00FFFF;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -156,71 +155,5 @@
     </footer>
 
     <script src="static/script.js"></script>
-    <script>
-        const provider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
-        const contractAddress = "0x22F75DFc8c03a2F8823E8c48ABFFDDb6A06bCfE0";
-        const contractABI = [
-            // Paste Contract ABI Here
-        ];
-
-        let contract;
-        let signer;
-
-        async function initialize() {
-            if (window.ethereum) {
-                const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-                await window.ethereum.request({ method: "eth_requestAccounts" });
-                signer = web3Provider.getSigner();
-                contract = new ethers.Contract(contractAddress, contractABI, signer);
-                loadJackpot();
-                loadWinners();
-            } else {
-                alert("Please install MetaMask!");
-            }
-        }
-
-        async function buyTicket(lotteryType, ticketPrice) {
-            try {
-                const tx = await contract[`joinLottery${lotteryType}`](ethers.utils.parseEther(ticketPrice));
-                await tx.wait();
-                alert("Ticket purchased successfully!");
-                loadJackpot();
-            } catch (error) {
-                console.error(error);
-                alert("Error purchasing ticket.");
-            }
-        }
-
-        async function loadJackpot() {
-            try {
-                const balance = await contract.lotteryBalance();
-                document.getElementById("jackpot").innerText = ethers.utils.formatEther(balance) + " BNB";
-            } catch (error) {
-                console.error("Failed to fetch jackpot.", error);
-            }
-        }
-
-        async function loadWinners() {
-            try {
-                const winners = await contract.allWinner();
-                const winnerList = document.getElementById("winner-list");
-                winnerList.innerHTML = "";
-                
-                if (winners.length === 0) {
-                    winnerList.innerHTML = "<li>No winners yet.</li>";
-                } else {
-                    winners.forEach(winner => {
-                        const li = document.createElement("li");
-                        li.textContent = winner;
-                        winnerList.appendChild(li);
-                    });
-                }
-            } catch (error) {
-                console.error("Failed to load winners.", error);
-            }
-        }
-
-        initialize();
-    </script>
 </body>
 </html>
