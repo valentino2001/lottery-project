@@ -42,11 +42,11 @@
             background: rgba(0, 0, 0, 0.8);
             border: 2px solid #00FFFF;
             border-radius: 15px;
-            padding: 30px 20px; /* Verlängert die Box */
+            padding: 30px;
             text-align: center;
             box-shadow: 0 0 20px #00FFFF;
             transition: transform 0.3s, box-shadow 0.3s;
-            width: 200px;
+            width: 220px;
         }
 
         .option:hover {
@@ -56,13 +56,13 @@
 
         .option h3 {
             font-size: 1.5rem;
-            color: #00FFFF; /* Neon-Türkis */
+            color: #00FFFF;
         }
 
         .option p {
             margin: 10px 0;
             font-size: 1rem;
-            color: #00FFFF; /* Neon-Türkis */
+            color: #00FFFF;
         }
 
         .option button {
@@ -77,8 +77,8 @@
         }
 
         .option button:hover {
-            background: #00FFFF; /* Neon-Türkis */
-            box-shadow: 0 0 20px #00FFFF; /* Neon-Türkis */
+            background: #00FFFF;
+            box-shadow: 0 0 20px #00FFFF;
         }
 
         .current-pot, .winners {
@@ -88,7 +88,7 @@
 
         .current-pot h2, .winners h2 {
             font-size: 2rem;
-            color: #00FFFF; /* Neon-Türkis */
+            color: #00FFFF;
             text-shadow: 0 0 10px #00FFFF;
         }
 
@@ -105,7 +105,7 @@
             margin: 5px auto;
             padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 0 10px #00FFFF; /* Neon-Türkis */
+            box-shadow: 0 0 10px #00FFFF;
             max-width: 300px;
             text-align: center;
         }
@@ -157,5 +157,71 @@
     </footer>
 
     <script src="static/script.js"></script>
+    <script>
+        let provider;
+        let signer;
+        let contract;
+
+        const contractAddress = "0x22F75DFc8c03a2F8823E8c48ABFFDDb6A06bCfE0";
+        const contractABI = [
+            [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"_id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_value","type":"uint256"}],"name":"logshh","type":"event"},{"inputs":[],"name":"UsdtInterface","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner1","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner2","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"announceLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"announceLottery1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"announceLottery2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getLottery1Length","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getLottery2Length","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getLotteryLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ad","type":"address"}],"name":"howMany","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"initization","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"lotteryBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tokenAdress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket1","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket2","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice1","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice2","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery2","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
+        ];
+
+        async function initialize() {
+            if (window.ethereum) {
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                signer = provider.getSigner();
+                contract = new ethers.Contract(contractAddress, contractABI, signer);
+                loadJackpot();
+                loadWinners();
+            } else {
+                alert("Please install MetaMask!");
+            }
+        }
+
+        async function buyTicket(lotteryType, ticketPrice) {
+            try {
+                const tx = await contract[`joinLottery${lotteryType}`](ethers.utils.parseEther(ticketPrice));
+                await tx.wait();
+                alert("Ticket purchased successfully!");
+                loadJackpot();
+            } catch (error) {
+                console.error(error);
+                alert("Error purchasing ticket.");
+            }
+        }
+
+        async function loadJackpot() {
+            try {
+                const balance = await contract.lotteryBalance();
+                document.getElementById("jackpot").innerText = ethers.utils.formatEther(balance) + " BNB";
+            } catch (error) {
+                console.error("Failed to fetch jackpot.", error);
+            }
+        }
+
+        async function loadWinners() {
+            try {
+                const winners = await contract.allWinner();
+                const winnerList = document.getElementById("winner-list");
+                winnerList.innerHTML = "";
+                
+                if (winners.length === 0) {
+                    winnerList.innerHTML = "<li>No winners yet.</li>";
+                } else {
+                    winners.forEach(winner => {
+                        const li = document.createElement("li");
+                        li.textContent = winner;
+                        winnerList.appendChild(li);
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load winners.", error);
+            }
+        }
+
+        initialize();
+    </script>
 </body>
 </html>
