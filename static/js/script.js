@@ -3,6 +3,16 @@ const provider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed.bina
 let signer;
 let contract;
 
+// ABI des Smart Contracts
+const contractABI = [
+    {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+    {"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"_id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_value","type":"uint256"}],"name":"logshh","type":"event"},
+    {"inputs":[],"name":"UsdtInterface","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"allWinner","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"joinLottery","outputs":[],"stateMutability":"nonpayable","type":"function","inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}]},
+    {"inputs":[],"name":"lotteryBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+];
+
 // Verbindung zu MetaMask herstellen
 async function connectWallet() {
     if (window.ethereum) {
@@ -12,7 +22,7 @@ async function connectWallet() {
             signer = web3Provider.getSigner();
             contract = new ethers.Contract(
                 "0x22F75DFc8c03a2F8823E8c48ABFFDDb6A06bCfE0", // Contract-Adresse
-                [ [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"_id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_value","type":"uint256"}],"name":"logshh","type":"event"},{"inputs":[],"name":"UsdtInterface","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner1","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner2","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"announceLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"announceLottery1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"announceLottery2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getLottery1Length","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getLottery2Length","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getLotteryLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ad","type":"address"}],"name":"howMany","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"initization","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"lotteryBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tokenAdress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket1","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket2","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice1","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice2","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery2","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}] ],
+                contractABI,
                 signer
             );
             alert("Wallet connected successfully!");
@@ -26,17 +36,16 @@ async function connectWallet() {
 }
 
 // Funktion zum Kauf eines Tickets
-async function buyTicket(ticketType, ticketPrice) {
+async function buyTicket(ticketPrice) {
     try {
         if (!contract) {
             alert("Please connect your wallet first!");
             return;
         }
-
-        const tx = await contract[`joinLottery${ticketType}`](ethers.utils.parseEther(ticketPrice));
+        const tx = await contract.joinLottery(ethers.utils.parseEther(ticketPrice));
         await tx.wait();
         alert("Ticket purchased successfully!");
-        loadJackpot(); // Jackpot-Daten nach Kauf aktualisieren
+        loadJackpot();
     } catch (error) {
         console.error("Error purchasing ticket:", error);
         alert("Transaction failed. Please try again.");
@@ -50,7 +59,6 @@ async function loadJackpot() {
             document.getElementById("jackpot").innerText = "Wallet not connected";
             return;
         }
-
         const balance = await contract.lotteryBalance();
         document.getElementById("jackpot").innerText = ethers.utils.formatEther(balance) + " BNB";
     } catch (error) {
@@ -65,11 +73,9 @@ async function loadWinners() {
             alert("Please connect your wallet.");
             return;
         }
-
         const winners = await contract.allWinner();
         const winnerList = document.getElementById("winner-list");
         winnerList.innerHTML = "";
-
         if (winners.length === 0) {
             winnerList.innerHTML = "<li>No winners yet.</li>";
         } else {
@@ -90,7 +96,6 @@ async function initialize() {
         alert("Please install MetaMask!");
         return;
     }
-
     try {
         await connectWallet();
         loadJackpot();
