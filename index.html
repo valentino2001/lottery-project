@@ -1,227 +1,150 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
+
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USDT Lottery</title>
-    <link rel="stylesheet" href="static/style.css">
-    <style>
-        body {
-            background: url('static/media/4k-ultra-hd-galaxy-gd084x5buvc6qrj8.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #00FFFF;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            text-align: center;
-            padding: 20px;
-        }
-
-        header .logo {
-            max-width: 150px;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            color: #00FFFF;
-            text-shadow: 0 0 20px #00FFFF;
-        }
-
-        .ticket-options {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 40px 20px;
-        }
-
-        .option {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00FFFF;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 0 20px #00FFFF;
-            transition: transform 0.3s, box-shadow 0.3s;
-            width: 220px;
-        }
-
-        .option:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px #00FFFF;
-        }
-
-        .option h3 {
-            font-size: 1.5rem;
-            color: #00FFFF;
-        }
-
-        .option p {
-            margin: 10px 0;
-            font-size: 1rem;
-            color: #00FFFF;
-        }
-
-        .option button {
-            background: #00FFFF;
-            color: black;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-
-        .option button:hover {
-            background: #00FFFF;
-            box-shadow: 0 0 20px #00FFFF;
-        }
-
-        .current-pot, .winners {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .current-pot h2, .winners h2 {
-            font-size: 2rem;
-            color: #00FFFF;
-            text-shadow: 0 0 10px #00FFFF;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-        }
-
-        .winner-list li {
-            list-style: none;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 5px auto;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #00FFFF;
-            max-width: 300px;
-            text-align: center;
-        }
-    </style>
+    <meta charset="utf-8" />
+    <link rel="icon" href="logo.png" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="MiniPepe Jackpot - Instant Lottery Win, Participate and Win." />
+    <link rel="apple-touch-icon" href="logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Play&amp;display=swap" rel="stylesheet">
+    <script src="../kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="manifest" href="manifest.json" />
+    <title>MiniPepe - Lottery</title>
+    <link href="static/css/2.0a9ec390.chunk.css" rel="stylesheet">
+    <link href="static/css/main.00f9315c.chunk.css" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <img src="logo.png" alt="Lottery Logo" class="logo">
-        <h1>USDT Lottery</h1>
-    </header>
-    
-    <main>
-        <section class="ticket-options">
-            <div class="option">
-                <h3>10 Participants</h3>
-                <p>Price per Ticket: 10 €</p>
-                <p>Jackpot: 100 €</p>
-                <button onclick="buyTicket(0, '10')">Buy Ticket</button>
-            </div>
-            <div class="option">
-                <h3>20 Participants</h3>
-                <p>Price per Ticket: 25 €</p>
-                <p>Jackpot: 500 €</p>
-                <button onclick="buyTicket(1, '25')">Buy Ticket</button>
-            </div>
-            <div class="option">
-                <h3>50 Participants</h3>
-                <p>Price per Ticket: 100 €</p>
-                <p>Jackpot: 5000 €</p>
-                <button onclick="buyTicket(2, '100')">Buy Ticket</button>
-            </div>
-        </section>
 
-        <section class="current-pot">
-            <h2>Current Jackpot</h2>
-            <p id="jackpot">Loading...</p>
-        </section>
-
-        <section class="winners">
-            <h2>Last Winners</h2>
-            <ul id="winner-list">
-                <!-- Dynamic winner list will be loaded here -->
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 USDT Lottery. All rights reserved.</p>
-    </footer>
-
-    <script src="static/script.js"></script>
+<body><noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
     <script>
-        let provider;
-        let signer;
-        let contract;
-
-        const contractAddress = "0x22F75DFc8c03a2F8823E8c48ABFFDDb6A06bCfE0";
-        const contractABI = [
-            [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"_id","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"_value","type":"uint256"}],"name":"logshh","type":"event"},{"inputs":[],"name":"UsdtInterface","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner1","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allWinner2","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"announceLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"announceLottery1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"announceLottery2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getLottery1Length","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getLottery2Length","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getLotteryLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ad","type":"address"}],"name":"howMany","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"initization","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"joinLottery2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"lotteryBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumbers","type":"uint256"}],"name":"setMaximmNumbers2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice1","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_valueInEther","type":"uint256"}],"name":"setTicketPrice2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startLottery","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"tokenAdress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket1","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicket2","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice1","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"viewTicketPrice2","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery1","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"winnerLottery2","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}]
-        ];
-
-        async function initialize() {
-            if (window.ethereum) {
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                await window.ethereum.request({ method: "eth_requestAccounts" });
-                signer = provider.getSigner();
-                contract = new ethers.Contract(contractAddress, contractABI, signer);
-                loadJackpot();
-                loadWinners();
-            } else {
-                alert("Please install MetaMask!");
+        ! function(e) {
+            function t(t) {
+                for (var n, i, a = t[0], c = t[1], l = t[2], s = 0, p = []; s < a.length; s++) i = a[s], Object.prototype.hasOwnProperty.call(o, i) && o[i] && p.push(o[i][0]), o[i] = 0;
+                for (n in c) Object.prototype.hasOwnProperty.call(c, n) && (e[n] = c[n]);
+                for (f && f(t); p.length;) p.shift()();
+                return u.push.apply(u, l || []), r()
             }
-        }
 
-        async function buyTicket(lotteryType, ticketPrice) {
-            try {
-                const tx = await contract[`joinLottery${lotteryType}`](ethers.utils.parseEther(ticketPrice));
-                await tx.wait();
-                alert("Ticket purchased successfully!");
-                loadJackpot();
-            } catch (error) {
-                console.error(error);
-                alert("Error purchasing ticket.");
-            }
-        }
-
-        async function loadJackpot() {
-            try {
-                const balance = await contract.lotteryBalance();
-                document.getElementById("jackpot").innerText = ethers.utils.formatEther(balance) + " BNB";
-            } catch (error) {
-                console.error("Failed to fetch jackpot.", error);
-            }
-        }
-
-        async function loadWinners() {
-            try {
-                const winners = await contract.allWinner();
-                const winnerList = document.getElementById("winner-list");
-                winnerList.innerHTML = "";
-                
-                if (winners.length === 0) {
-                    winnerList.innerHTML = "<li>No winners yet.</li>";
-                } else {
-                    winners.forEach(winner => {
-                        const li = document.createElement("li");
-                        li.textContent = winner;
-                        winnerList.appendChild(li);
-                    });
+            function r() {
+                for (var e, t = 0; t < u.length; t++) {
+                    for (var r = u[t], n = !0, a = 1; a < r.length; a++) {
+                        var c = r[a];
+                        0 !== o[c] && (n = !1)
+                    }
+                    n && (u.splice(t--, 1), e = i(i.s = r[0]))
                 }
-            } catch (error) {
-                console.error("Failed to load winners.", error);
+                return e
             }
-        }
+            var n = {},
+                o = {
+                    1: 0
+                },
+                u = [];
 
-        initialize();
+            function i(t) {
+                if (n[t]) return n[t].exports;
+                var r = n[t] = {
+                    i: t,
+                    l: !1,
+                    exports: {}
+                };
+                return e[t].call(r.exports, r, r.exports, i), r.l = !0, r.exports
+            }
+            i.e = function(e) {
+                var t = [],
+                    r = o[e];
+                if (0 !== r)
+                    if (r) t.push(r[2]);
+                    else {
+                        var n = new Promise((function(t, n) {
+                            r = o[e] = [t, n]
+                        }));
+                        t.push(r[2] = n);
+                        var u, a = document.createElement("script");
+                        a.charset = "utf-8", a.timeout = 120, i.nc && a.setAttribute("nonce", i.nc), a.src = function(e) {
+                            return i.p + "static/js/" + ({} [e] || e) + "." + {
+                                3: "7489cab3"
+                            } [e] + ".chunk.js"
+                        }(e);
+                        var c = new Error;
+                        u = function(t) {
+                            a.onerror = a.onload = null, clearTimeout(l);
+                            var r = o[e];
+                            if (0 !== r) {
+                                if (r) {
+                                    var n = t && ("load" === t.type ? "missing" : t.type),
+                                        u = t && t.target && t.target.src;
+                                    c.message = "Loading chunk " + e + " failed.\n(" + n + ": " + u + ")", c.name = "ChunkLoadError", c.type = n, c.request = u, r[1](c)
+                                }
+                                o[e] = void 0
+                            }
+                        };
+                        var l = setTimeout((function() {
+                            u({
+                                type: "timeout",
+                                target: a
+                            })
+                        }), 12e4);
+                        a.onerror = a.onload = u, document.head.appendChild(a)
+                    } return Promise.all(t)
+            }, i.m = e, i.c = n, i.d = function(e, t, r) {
+                i.o(e, t) || Object.defineProperty(e, t, {
+                    enumerable: !0,
+                    get: r
+                })
+            }, i.r = function(e) {
+                "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
+                    value: "Module"
+                }), Object.defineProperty(e, "__esModule", {
+                    value: !0
+                })
+            }, i.t = function(e, t) {
+                if (1 & t && (e = i(e)), 8 & t) return e;
+                if (4 & t && "object" == typeof e && e && e.__esModule) return e;
+                var r = Object.create(null);
+                if (i.r(r), Object.defineProperty(r, "default", {
+                        enumerable: !0,
+                        value: e
+                    }), 2 & t && "string" != typeof e)
+                    for (var n in e) i.d(r, n, function(t) {
+                        return e[t]
+                    }.bind(null, n));
+                return r
+            }, i.n = function(e) {
+                var t = e && e.__esModule ? function() {
+                    return e.default
+                } : function() {
+                    return e
+                };
+                return i.d(t, "a", t), t
+            }, i.o = function(e, t) {
+                return Object.prototype.hasOwnProperty.call(e, t)
+            }, i.p = "logo.png", i.oe = function(e) {
+                throw console.error(e), e
+            };
+            var a = this.webpackJsonpdinolottery = this.webpackJsonpdinolottery || [],
+                c = a.push.bind(a);
+            a.push = t, a = a.slice();
+            for (var l = 0; l < a.length; l++) t(a[l]);
+            var f = c;
+            r()
+        }([])
     </script>
+    <script src="static/js/2.0c9bab0e.chunk.js"></script>
+    <script src="static/js/main.c10fd7f2.chunk.js"></script>
 </body>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-129GBRBC9G"></script>
+<script>
+    function gtag() {
+        dataLayer.push(arguments)
+    }
+    window.dataLayer = window.dataLayer || [], gtag("js", new Date), gtag("config", "G-129GBRBC9G")
+</script>
+
+
+
 </html>
