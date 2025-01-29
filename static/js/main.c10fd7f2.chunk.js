@@ -1536,7 +1536,7 @@
                         }), Object(g.jsx)("br", {}), Object(g.jsx)("center", {
                             children: Object(g.jsxs)("h5", {
                                 children: [" ", Object(g.jsxs)("a", {
-                                    href: "https://twitter.com/USDT_",
+                                    href: "https://x.com/Luminex_0xV2",
                                     style: {
                                         color: "#ffc107",
                                         textDecoration: "none"
@@ -1545,7 +1545,7 @@
                                         class: "fa fa-twitter"
                                     }), " Twitter "]
                                 }), " || ", Object(g.jsxs)("a", {
-                                    href: "https://t.me/USDTofficialchat",
+                                    href: "https://t.me/luminex_official",
                                     style: {
                                         color: "#ffc107",
                                         textDecoration: "none"
@@ -1555,7 +1555,7 @@
                                     }), " Telegram "]
                                 
                                 }), "|| ", Object(g.jsxs)("a", {
-                                    href: "https://bscscan.com/address/0x55d398326f99059fF775485246999027B3197955#code",
+                                    href: "https://bscscan.com/address/0x22f75dfc8c03a2f8823e8c48abffddb6a06bcfe0#code",
                                     style: {
                                         color: "#ffc107",
                                         textDecoration: "none"
